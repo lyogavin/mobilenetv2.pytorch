@@ -194,6 +194,8 @@ def main():
     train_loader, train_loader_len = get_train_loader(args.data, args.batch_size, workers=args.workers, input_size=args.input_size)
     val_loader, val_loader_len = get_val_loader(args.data, args.batch_size, workers=args.workers, input_size=args.input_size)
 
+    print(f"got loader: {train_loader} len:{train_loader_len}, {val_loader} len:{val_loader_len}")
+
     if args.evaluate:
         from collections import OrderedDict
         if os.path.isfile(args.weight):

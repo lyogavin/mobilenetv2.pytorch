@@ -162,7 +162,7 @@ try:
             return DALIWrapper(val_loader), int(pipe.epoch_size("Reader") / (world_size * batch_size))
 
         return gdvl
-    
+
 except ImportError:
     print("Please install DALI from https://www.github.com/NVIDIA/DALI to run this example.")
 
@@ -244,7 +244,7 @@ def get_pytorch_train_loader(data_path, batch_size, workers=5, _worker_init_fn=N
             train_dataset, batch_size=batch_size, shuffle=(train_sampler is None),
             num_workers=workers, worker_init_fn=_worker_init_fn, pin_memory=True, sampler=train_sampler, collate_fn=fast_collate)
 
-    return PrefetchedWrapper(train_loader), len(train_loader)
+    return train_loader, len(train_loader)
 
 def get_pytorch_val_loader(data_path, batch_size, workers=5, _worker_init_fn=None, input_size=224):
     valdir = os.path.join(data_path, 'val')
@@ -266,4 +266,4 @@ def get_pytorch_val_loader(data_path, batch_size, workers=5, _worker_init_fn=Non
             num_workers=workers, worker_init_fn=_worker_init_fn, pin_memory=True,
             collate_fn=fast_collate)
 
-    return PrefetchedWrapper(val_loader), len(val_loader)
+    return val_loader, len(val_loader)
