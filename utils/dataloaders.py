@@ -218,19 +218,13 @@ class PrefetchedWrapper(object):
         self.epoch += 1
         return PrefetchedWrapper.prefetched_loader(self.dataloader)
 
-
-normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                 std=[0.229, 0.224, 0.225])
-
 def get_pytorch_train_loader(data_path, batch_size, workers=5, _worker_init_fn=None, input_size=224):
     traindir = os.path.join(data_path, 'train')
     train_dataset = datasets.ImageFolder(
             traindir,
             transforms.Compose([
-                transforms.RandomResizedCrop(input_size, scale=(0.2, 1.0)),
+                transforms.RandomResizedCrop(input_size),
                 transforms.RandomHorizontalFlip(),
-                transforms.ToTensor(),
-                normalize,
                 ]))
 
     if torch.distributed.is_initialized():
@@ -250,8 +244,6 @@ def get_pytorch_val_loader(data_path, batch_size, workers=5, _worker_init_fn=Non
             valdir, transforms.Compose([
                 transforms.Resize(int(input_size / 0.875)),
                 transforms.CenterCrop(input_size),
-                transforms.ToTensor(),
-                normalize,
                 ]))
 
     if torch.distributed.is_initialized():
