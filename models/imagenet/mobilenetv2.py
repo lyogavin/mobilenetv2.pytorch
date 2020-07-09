@@ -103,6 +103,8 @@ class MobileNetV2(nn.Module):
             [6, 320, 1, 1],
         ]
 
+        print("creating net")
+
         # building first layer
         input_channel = _make_divisible(32 * width_mult, 4 if width_mult == 0.1 else 8)
         layers = [conv_3x3_bn(3, input_channel, 2)]
@@ -119,6 +121,7 @@ class MobileNetV2(nn.Module):
         self.conv = conv_1x1_bn(input_channel, output_channel)
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.classifier = nn.Linear(output_channel, num_classes)
+        print("_initialize_weights...")
 
         self._initialize_weights()
 
