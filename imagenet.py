@@ -27,6 +27,7 @@ import models.imagenet as customized_models
 from utils import Bar, Logger, AverageMeter, accuracy, mkdir_p, savefig
 from utils.dataloaders import *
 from tensorboardX import SummaryWriter
+from tqdm import tqdm
 
 default_model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
@@ -274,7 +275,7 @@ def train(train_loader, train_loader_len, model, criterion, optimizer, epoch):
     model.train()
 
     end = time.time()
-    for i, (input, target) in enumerate(train_loader):
+    for i, (input, target) in tqdm(enumerate(train_loader), postfix="train_loader"):
         adjust_learning_rate(optimizer, epoch, i, train_loader_len)
 
         # measure data loading time
