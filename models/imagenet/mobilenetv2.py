@@ -123,7 +123,7 @@ class MobileNetV2(nn.Module):
         self.classifier = nn.Linear(output_channel, num_classes)
         print("_initialize_weights...")
 
-        self._initialize_weights()
+        #self._initialize_weights()
 
     def forward(self, x):
         x = self.features(x)
