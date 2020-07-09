@@ -139,7 +139,12 @@ class MobileNetV2(nn.Module):
                 print("_initialize_weights Conv2d...")
 
                 n = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
+
+                print(f"normalizing n:{n}...")
                 m.weight.data.normal_(0, math.sqrt(2. / n))
+
+
+                print(f"reset bias...")
                 if m.bias is not None:
                     m.bias.data.zero_()
             elif isinstance(m, nn.BatchNorm2d):
