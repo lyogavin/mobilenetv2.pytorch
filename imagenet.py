@@ -137,6 +137,8 @@ def main():
     print("=> creating model '{}'".format(args.arch))
     model = models.__dict__[args.arch](width_mult=args.width_mult)
 
+    print("model created")
+
     if not args.distributed:
         if args.arch.startswith('alexnet') or args.arch.startswith('vgg'):
             model.features = torch.nn.DataParallel(model.features)
@@ -146,6 +148,8 @@ def main():
     else:
         model.cuda()
         model = torch.nn.parallel.DistributedDataParallel(model)
+
+    print("cuda model")
 
     # define loss function (criterion) and optimizer
     criterion = nn.CrossEntropyLoss().cuda()
